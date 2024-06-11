@@ -6,6 +6,10 @@ def remove_in_parens(text: str):
     return re.sub("[\(\[].*?[\)\]]", "", text).strip()
 
 
+def tuple_to_hex(tpl: tuple[float, float, float, float]) -> str:
+    return "#" + "".join([hex(int(i * 255))[2:].zfill(2) for i in tpl[:-1]])
+
+
 def get_wiki_tables(url: str,
                     column_match: str | list[str]) -> list[pd.DataFrame]:
     dfs = pd.read_html(url, header=0)
