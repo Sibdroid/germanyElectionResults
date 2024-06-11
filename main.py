@@ -1,5 +1,4 @@
 from utils import *
-import matplotlib.pyplot
 import matplotlib
 cmap = matplotlib.colors.LinearSegmentedColormap
 COLORS = {"Union": "#585858",
@@ -23,7 +22,6 @@ def make_color_df(df: pd.DataFrame) -> pd.DataFrame:
     for column in df.columns:
         try:
             colors = []
-            print(column)
             cmap = make_cmap(COLORS[column])
             for value in df[column]:
                 colors += [get_color(cmap, value, max(df[column]))]
@@ -42,7 +40,16 @@ def main():
     df = df.dropna()
     df["State"] = df["State"].apply(lambda x: remove_in_parens(x))
     color_df = make_color_df(df)
-    print(color_df.to_string())
+    with open("basemap.svg", encoding="UTF-8") as file:
+        header_split = """inkscape:window-maximized="1" />"""
+        header,  paths = file.read().split(header_split)
+        header += header_split
+        paths = ["<path" + i for i in paths.split("<path")
+                 if i.strip()]
+        for path in paths:
+            print(path)
+            print( )
+
 
 
 if __name__ == "__main__":
