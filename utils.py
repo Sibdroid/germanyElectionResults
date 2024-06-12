@@ -26,12 +26,17 @@ def get_wiki_tables(url: str,
     return dfs_to_return
 
 
-def main():
-    df = get_wiki_tables("https://en.wikipedia.org/wiki"
-                          "/2024_European_Parliament_election_in_Germany",
-                           "State")[0]
-    print(df.to_string())
+def split_svg(contains: str,
+              header_split: str) -> tuple[str, list[str], str]:
+    header, paths = contains.split(header_split)
+    header += header_split
+    paths = ["<path" + i for i in paths.split("<path")
+             if i.strip()]
+    paths[-1] = paths[-1].replace("""</svg>""", "")
+    return header, paths, """</svg>"""
 
 
-if __name__ == "__main__":
-    main()
+def change_df_index(df: pd.DataFrame, changes: dict[str, str]):
+    index = [changes.get(i, i) for i in df.index]
+    df.index = index
+    return df

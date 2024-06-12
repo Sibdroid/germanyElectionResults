@@ -1,5 +1,6 @@
 from utils import *
 import matplotlib
+import re
 cmap = matplotlib.colors.LinearSegmentedColormap
 COLORS = {"Union": "#585858",
           "AfD": "#11a1ee",
@@ -7,6 +8,10 @@ COLORS = {"Union": "#585858",
           "Grüne": "#47c639",
           "BSW": "#cd3275",
           "FDP": "#ffb800"}
+NAMES = {"North Rhine-Westphalia": "North_Rhine-Westphalia",
+         "Lower Saxony": "Lower_Saxony",
+         "Bavaria": "Bayern",
+         "Baden-Württemberg": "Baden-Wuttemberg"}
 
 def make_cmap(color: str) -> cmap:
     return cmap.from_list("", ["white", color])
@@ -40,15 +45,18 @@ def main():
     df = df.dropna()
     df["State"] = df["State"].apply(lambda x: remove_in_parens(x))
     color_df = make_color_df(df)
+    color_df = change_df_index(color_df, NAMES)
+    #print(color_df.to_string())
+    party = "Union"
     with open("basemap.svg", encoding="UTF-8") as file:
         header_split = """inkscape:window-maximized="1" />"""
-        header,  paths = file.read().split(header_split)
-        header += header_split
-        paths = ["<path" + i for i in paths.split("<path")
-                 if i.strip()]
+        header, paths, footer = split_svg(file.read(), header_split)
         for path in paths:
-            print(path)
-            print( )
+            fill = [i for i in path.splitlines() if "fill=" in i
+                    and "style" not in i][0]
+            id = [i for i in path.splitlines() if "id=" in i][0]
+            id = re.findall('"([^"]*)"', id)[0]
+            print(color_df[party][id])
 
 
 
