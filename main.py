@@ -51,12 +51,25 @@ def main():
     with open("basemap.svg", encoding="UTF-8") as file:
         header_split = """inkscape:window-maximized="1" />"""
         header, paths, footer = split_svg(file.read(), header_split)
+        new_paths = []
         for path in paths:
             fill = [i for i in path.splitlines() if "fill=" in i
-                    and "style" not in i][0]
+                    and "style" not in i][0].strip()
+            fill = re.findall('"([^"]*)"', fill)[0]
             id = [i for i in path.splitlines() if "id=" in i][0]
             id = re.findall('"([^"]*)"', id)[0]
-            print(color_df[party][id])
+            path = path.replace(fill, color_df[party][id].upper())
+            path = "".join([i+"\n" for i in path.splitlines()
+                            if """style="fill""""" not in i])
+            path += " />"
+            new_paths += [path]
+
+    with open(f"{party}-map.svg", "w", encoding="UTF-8") as file:
+        file.write(header)
+        for path in new_paths:
+            file.write(path)
+        file.write(footer)
+
 
 
 
