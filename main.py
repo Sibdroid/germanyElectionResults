@@ -38,16 +38,8 @@ def make_color_df(df: pd.DataFrame) -> pd.DataFrame:
     return color_df
 
 
-def main():
-    df = get_wiki_tables("https://en.wikipedia.org/wiki"
-                         "/2024_European_Parliament_election_in_Germany",
-                         "State")[0]
-    df = df.dropna()
-    df["State"] = df["State"].apply(lambda x: remove_in_parens(x))
-    color_df = make_color_df(df)
-    color_df = change_df_index(color_df, NAMES)
-    #print(color_df.to_string())
-    party = "Union"
+def make_map(color_df: pd.DataFrame,
+             party: str) -> None:
     with open("basemap.svg", encoding="UTF-8") as file:
         header_split = """inkscape:window-maximized="1" />"""
         header, paths, footer = split_svg(file.read(), header_split)
@@ -63,12 +55,22 @@ def main():
                             if """style="fill""""" not in i])
             path += " />"
             new_paths += [path]
-
     with open(f"{party}-map.svg", "w", encoding="UTF-8") as file:
         file.write(header)
         for path in new_paths:
             file.write(path)
         file.write(footer)
+
+def main():
+    df = get_wiki_tables("https://en.wikipedia.org/wiki"
+                         "/2024_European_Parliament_election_in_Germany",
+                         "State")[0]
+    df = df.dropna()
+    df["State"] = df["State"].apply(lambda x: remove_in_parens(x))
+    color_df = make_color_df(df)
+    color_df = change_df_index(color_df, NAMES)
+    make_map(color_df, "SPD")
+
 
 
 
