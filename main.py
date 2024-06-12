@@ -69,10 +69,8 @@ def main():
     df["State"] = df["State"].apply(lambda x: remove_in_parens(x))
     color_df = make_color_df(df)
     color_df = change_df_index(color_df, NAMES)
-    make_map(color_df, "SPD")
-
-
-
+    for i in COLORS.keys():
+        make_map(color_df, i)
 
 
 if __name__ == "__main__":
