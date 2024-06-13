@@ -1,5 +1,7 @@
 import pandas as pd
 import re
+from svglib.svglib import svg2rlg
+from reportlab.graphics import renderPM
 
 
 def remove_in_parens(text: str):
@@ -40,3 +42,9 @@ def change_df_index(df: pd.DataFrame, changes: dict[str, str]):
     index = [changes.get(i, i) for i in df.index]
     df.index = index
     return df
+
+
+def svg_to_png(svg_name: str) -> None:
+    png_name = f"{svg_name.split('.')[0]}.png"
+    drawing = svg2rlg(svg_name)
+    renderPM.drawToFile(drawing, png_name, fmt="PNG")

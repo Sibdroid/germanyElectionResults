@@ -62,15 +62,16 @@ def make_map(color_df: pd.DataFrame,
         file.write(footer)
 
 def main():
-    df = get_wiki_tables("https://en.wikipedia.org/wiki"
-                         "/2024_European_Parliament_election_in_Germany",
-                         "State")[0]
-    df = df.dropna()
-    df["State"] = df["State"].apply(lambda x: remove_in_parens(x))
-    color_df = make_color_df(df)
-    color_df = change_df_index(color_df, NAMES)
-    for i in COLORS.keys():
-        make_map(color_df, i)
+    #df = get_wiki_tables("https://en.wikipedia.org/wiki"
+    #                     "/2024_European_Parliament_election_in_Germany",
+    #                     "State")[0]
+    #df = df.dropna()
+    #df["State"] = df["State"].apply(lambda x: remove_in_parens(x))
+    #color_df = make_color_df(df)
+    #color_df = change_df_index(color_df, NAMES)
+    #for i in COLORS.keys():
+    #    make_map(color_df, i)
+    svg_to_png("ready-maps/AfD-map-grad.svg")
 
 
 if __name__ == "__main__":
