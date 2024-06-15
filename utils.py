@@ -1,7 +1,7 @@
 import pandas as pd
 import re
-from svglib.svglib import svg2rlg
-from reportlab.graphics import renderPM
+import subprocess
+from PIL import Image
 
 
 def remove_in_parens(text: str):
@@ -44,7 +44,24 @@ def change_df_index(df: pd.DataFrame, changes: dict[str, str]):
     return df
 
 
-def svg_to_png(svg_name: str) -> None:
-    png_name = f"{svg_name.split('.')[0]}.png"
-    drawing = svg2rlg(svg_name)
-    renderPM.drawToFile(drawing, png_name, fmt="PNG")
+def svg_to_png(svg_name: str, png_name: str,
+               background_color: str = "white") -> None:
+    args = [
+        "C:/Program Files/Inkscape/bin/inkscape.com",
+        svg_name,
+        "-o",
+        png_name,
+        "-b",
+        background_color
+    ]
+    subprocess.run(args)
+
+
+def make_image_grid(png_paths: list[str], rows: int, cols: int):
+    images = [Image.open(i) for i in png_paths]
+    w, h = images[0].size
+    grid = Image.new('RGB', size=(cols*w, rows*h))
+    grid_w, grid_h = grid.size
+    for i, img in enumerate(images):
+        grid.paste(img, box=(i%cols*w, i//cols*h))
+    return grid

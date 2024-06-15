@@ -71,7 +71,12 @@ def main():
     #color_df = change_df_index(color_df, NAMES)
     #for i in COLORS.keys():
     #    make_map(color_df, i)
-    svg_to_png("ready-maps/AfD-map-grad.svg")
+    image_paths = []
+    for party in COLORS.keys():
+        svg_to_png(f"ready-maps/{party}-map-grad.svg",
+                   f"ready-maps/{party}-map-grad.png")
+        image_paths += [f"ready-maps/{party}-map-grad.png"]
+    make_image_grid(image_paths, 2, 3).save("ready-maps/grid.png")
 
 
 if __name__ == "__main__":
