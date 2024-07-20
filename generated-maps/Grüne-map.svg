@@ -28,10 +28,10 @@
    id="defs22"><linearGradient
      id="linearGradient1"
      inkscape:collect="always"><stop
-       style="stop-color:#c3e7fa;stop-opacity:1;"
+       style="stop-color:#ddf4da;stop-opacity:1;"
        offset="0"
        id="stop1" /><stop
-       style="stop-color:#11a1ee;stop-opacity:1;"
+       style="stop-color:#47c639;stop-opacity:1;"
        offset="1"
        id="stop2" /></linearGradient><inkscape:perspective
      sodipodi:type="inkscape:persp3d"
@@ -178,14 +178,14 @@
    transform="matrix(1.1029651,0,0,0.4534412,-5.5405412,1.3888888)" /><text
    xml:space="preserve"
    style="font-size:16px;line-height:1;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke-width:4;stroke-dashoffset:2.92652;paint-order:fill markers stroke"
-   x="14.702385"
+   x="20.5"
    y="37.368561"
    id="text2"
    transform="translate(4.7741776,3.1705017)"><tspan
      sodipodi:role="line"
      id="tspan2"
-     x="14.702385"
-     y="37.368561">8%</tspan></text><text
+     x="20.5"
+     y="37.368561">3.9%</tspan></text><text
    xml:space="preserve"
    style="font-size:16px;line-height:1;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke-width:4;stroke-dashoffset:2.92652;paint-order:fill markers stroke"
    x="111.18678"
@@ -195,5 +195,5 @@
      sodipodi:role="line"
      id="tspan3"
      x="111.18678"
-     y="39.20636">31.8%</tspan></text></svg>
+     y="39.20636">21.2%</tspan></text></svg>
 

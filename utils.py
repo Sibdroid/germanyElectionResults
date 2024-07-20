@@ -1,7 +1,8 @@
 import pandas as pd
 import re
 import subprocess
-from PIL import Image
+from PIL import Image, ImageColor
+from math import sqrt
 
 
 def remove_in_parens(text: str):
@@ -65,3 +66,8 @@ def make_image_grid(png_paths: list[str], rows: int, cols: int):
     for i, img in enumerate(images):
         grid.paste(img, box=(i%cols*w, i//cols*h))
     return grid
+
+
+def get_brightness(color: str) -> float:
+    r, g, b = ImageColor.getcolor(color, "RGB")
+    return sqrt(0.299 * r ** 2 + 0.587 * g ** 2 + 0.114 * b ** 2)
